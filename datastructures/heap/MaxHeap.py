@@ -59,6 +59,10 @@ class MaxHeap(object):
         self.__shiftDown(0)
         return returnValue
 
+    def getMax(self):
+        if self.currSize > 0:
+            return self.heapList[0]
+
     def __shiftUp(self, i):
         while self.__hasParent(i):
             parentIndex = self.__getParentIndex(i)
@@ -70,6 +74,7 @@ class MaxHeap(object):
         i = len(alist) // 2
         self.currSize = len(alist)
         self.heapList = alist[:]
+
         while (i >= 0):
             self.__shiftDown(i)
             i = i - 1
