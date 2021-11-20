@@ -1,0 +1,62 @@
+from collections import deque
+
+
+class Node:
+    def __init__(self, val):
+        self.right = None
+        self.data = val
+        self.left = None
+
+
+class Solution:
+    def __init__(self):
+        self.result = []
+
+    def postorderTraversalRecursive(self, root):
+        if (root is None):
+            return
+
+        self.postorderTraversalRecursive(root.left)
+        self.postorderTraversalRecursive(root.right)
+        self.result.append(root.data)
+
+    def postorderTraversalIterative(self, root):
+        # Return if tree is empty
+        if (root is None):
+            return
+
+        stack = deque()
+        outStack = deque()
+        stack.append(root)
+
+        while (stack):
+            curr = stack.pop()
+            outStack.append(curr.data)
+
+            if (curr.left):
+                stack.append(curr.left)
+
+            if (curr.right):
+                stack.append(curr.right)
+
+        while (outStack):
+            self.result.append(outStack.pop())
+
+
+if __name__ == '__main__':
+    root = Node(1)
+    root.left = Node(2)
+    root.right = Node(3)
+    root.left.left = Node(4)
+    root.right.left = Node(5)
+    root.right.right = Node(6)
+    root.right.left.left = Node(7)
+    root.right.left.right = Node(8)
+
+    sol = Solution()
+    sol.postorderTraversalRecursive(root)
+    print("Postorder Traversal Recursive : ", sol.result)
+
+    sol.result = []
+    sol.postorderTraversalIterative(root)
+    print("Postorder Traversal Iterative : ", sol.result)
