@@ -40,7 +40,8 @@ class Solution:
                 if (curr.data not in hMap.keys()):
                     hMap[curr.data] = [out]
                 else:
-                    if (out in hMap[curr.data] and not self.isExistsInResult(out)):
+                    if (out in hMap[curr.data]
+                       and not self.isExistsInResult(out)):
                         self.result.append((curr, out))
                     else:
                         hMap[curr.data].append(out)
