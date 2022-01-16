@@ -127,15 +127,3 @@ class BinarySearchTree:
         Returns a count of nodes currently present in BST
         '''
         return self.numNodes
-
-
-b = BinarySearchTree()
-b.insert(5)
-b.insert(8)
-b.insert(2)
-b.insert(10)
-print(b.count())
-print(b.search(100))
-print(b.search(8))
-print(b.delete(2))
-print(b.printTree())
