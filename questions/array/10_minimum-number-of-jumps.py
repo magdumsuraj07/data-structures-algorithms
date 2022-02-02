@@ -1,27 +1,55 @@
 from sys import maxsize as MAX_INT
-from tracemalloc import start
 
-def minJumpsHelper(arr, n, startIndex, dp):
-    if (startIndex >= n-1):
+def minJumps(arr, n, si, dp):
+    if (si == n-1):
         return 0
-    minimumJumps = MAX_INT
-    for j in range(arr[startIndex]+1, 0, -1):
-        if (startIndex+j < n):
-            if (dp[startIndex+j] == -1):
-                jumps = minJumpsHelper(arr, n, startIndex+j, dp)
-                dp[startIndex+j] = jumps
+    if (si > n-1):
+        return MAX_INT
+    maxReach = arr[si]
+    if (maxReach == 0):
+        return -1
+    
+    minijumps = MAX_INT
+    for i in range(1, maxReach+1):
+        if (si+i < n):
+            if (dp[si+i] == MAX_INT):
+                jumps = minJumps(arr, n, si+i, dp)
+                dp[si+i] = jumps
             else:
-                jumps = dp[startIndex+j]
-            jumps += 1
-            if (jumps < minimumJumps):
-                minimumJumps = jumps
-    return minimumJumps
+                jumps = dp[si+i]
+            if (jumps < minijumps):
+                minijumps = jumps
+    if (minijumps == -1):
+        return -1
+    return 1 + minijumps
+
+
+def minJumpsIterative(arr, n):
+    dp = [MAX_INT for i in range(n)]
+    dp[n-1] = 0
+    for i in range(n-2, -1, -1):
+        maxReach = arr[i]
+        if (maxReach == 0):
+            continue
+        elif (maxReach >= n-i-1):
+            dp[i] = 1
+        else:
+            miniJumps = min(dp[i+1:i+maxReach+1], default=MAX_INT)
+            if (miniJumps == MAX_INT):
+                dp[i] = MAX_INT
+            else:
+                dp[i] = 1 + miniJumps
+    if (dp[0] == MAX_INT):
+        return -1
+    return dp[0]
 
 
 
-arr = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+
+
+# arr = [1, 3, 5, 8, 9, 2, 6, 7, 6, 8, 9]
+arr = [1, 0, 3, 2, 6, 7]
 n = len(arr)
-dp = [-1 for x in range(n)]
+dp = [MAX_INT for i in range(n)]
 dp[n-1] = 0
-minJumpsHelper(arr, n, 0, dp)
-print(dp)
+print(minJumps(arr, n, 0, dp))
