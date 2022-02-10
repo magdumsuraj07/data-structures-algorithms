@@ -1,3 +1,6 @@
+from queue import Queue
+
+
 class Graph:
     def __init__(self, nVertices):
         self.nVertices = nVertices
@@ -15,6 +18,30 @@ class Graph:
 
     def containsEdge(self, v1, v2):
         return self.adjMatrix[v1][v2] == 1
+
+    def __dfsHelper(self, startVertex, visited):
+        print(startVertex)
+        visited[startVertex] = True
+        for i in range(self.nVertices):
+            if (self.containsEdge(startVertex, i) and visited[i] is False):
+                self.__dfsHelper(i, visited)
+
+    def dfs(self):
+        visited = [False for i in range(self.nVertices)]
+        self.__dfsHelper(0, visited)
+
+    def bfs(self):
+        visited = [False for i in range(self.nVertices)]
+        q = Queue()
+        q.put(0)
+        visited[0] = True
+        while (q.empty() is False):
+            vertex = q.get()
+            print(vertex)
+            for i in range(self.nVertices):
+                if (self.containsEdge(vertex, i) and visited[i] is False):
+                    q.put(i)
+                    visited[i] = True
 
     def __str__(self) -> str:
         return str(self.adjMatrix)
