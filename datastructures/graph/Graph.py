@@ -28,13 +28,14 @@ class Graph:
 
     def dfs(self):
         visited = [False for i in range(self.nVertices)]
-        self.__dfsHelper(0, visited)
+        for i in range(self.nVertices):
+            if (visited[i] is False):
+                self.__dfsHelper(i, visited)
 
-    def bfs(self):
-        visited = [False for i in range(self.nVertices)]
+    def __bfsHelper(self, startVertex, visited):
         q = Queue()
-        q.put(0)
-        visited[0] = True
+        q.put(startVertex)
+        visited[startVertex] = True
         while (q.empty() is False):
             vertex = q.get()
             print(vertex)
@@ -42,6 +43,12 @@ class Graph:
                 if (self.containsEdge(vertex, i) and visited[i] is False):
                     q.put(i)
                     visited[i] = True
+
+    def bfs(self):
+        visited = [False for i in range(self.nVertices)]
+        for i in range(self.nVertices):
+            if (visited[i] is False):
+                self.__bfsHelper(i, visited)
 
     def __str__(self) -> str:
         return str(self.adjMatrix)
