@@ -1,13 +1,3 @@
-class Edge:
-    def __init__(self, _source, _destination, _weight):
-        self.source = _source
-        self.destination = _destination
-        self.weight = _weight
-    
-    def __lt__(self, other):
-        return self.weight < other.weight
-
-
 def getParent(vertex, parents):
     if (vertex == parents[vertex]):
         return vertex

@@ -1,4 +1,4 @@
-from sys import stdin, maxsize as MAX_INT
+from sys import maxsize as MAX_INT
 
 
 def findMinimumVertex(weights, visited):
